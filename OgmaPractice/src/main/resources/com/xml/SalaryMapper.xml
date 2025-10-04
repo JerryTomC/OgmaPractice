@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cms.mapper.salary.SalaryMapper">
+
+	<select id="select"
+		parameterType="com.cms.entity.salary.SalaryBean"
+		resultType="com.cms.entity.salary.SalaryBean">
+		SELECT
+		T1.employeeId,
+		CONCAT(SUBSTRING(T1.salaryMonth,1,4),"年",SUBSTRING(T1.salaryMonth,5,7),"月") AS salaryMonth,
+		FORMAT(T1.salary,0) AS salary,
+		T1.workhours,
+		FORMAT(T1.disabledGeneration,0) AS disabledGeneration,
+		FORMAT(T1.cost,0) AS cost,
+		FORMAT(T1.actualSalary,0) AS actualSalary,
+		T2.name as employeeName
+		FROM
+		cms_salary_detail T1
+		left join cms_employee T2 on T1.employeeId = T2.employeeId
+		<where>
+			<if test="employeeId != null">
+				and T1.employeeId = #{employeeId}
+			</if>
+			<if test="salaryMonth != null">
+				and T1.salaryMonth = #{salaryMonth}
+			</if>
+		</where>
+		order by T1.employeeId asc, T1.salaryMonth DESC
+	</select>
+
+</mapper>
