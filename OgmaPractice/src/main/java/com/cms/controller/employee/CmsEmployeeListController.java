@@ -33,34 +33,33 @@ import com.utils.ServiceUtils;
 public class CmsEmployeeListController extends ControllerBase {
 	private List<CmsEmployeeBean> lst;
 
-//                                            _oo0oo_
-//                                           o8888888o
-//                                             88" . "88
-//                                             (| ^_^ |)                              
-//                                             O\  =  /O                              
-//                                        ____/`---'\____  
-//                                          .' \\|     |// '.
-//                                       / \\|||  :  |||// \
-//                                    / _||||| -:- |||||- \
-//                                      |   | \\\  -  /// |   |
-//                                     | \_|  ''\---/''  |_/ |
-//                                      \  .-\__  '-'  ___/-. /
-//                                   ___'. .'  /--.--\  `. .'___
-//                           ."" '<  `.___\_<|>_/___.' >' "".
-//                               | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//                             \  \ `_.   \_ __\ /__ _/   .-` /  /
-//               =====`-.____`.___ \_____/___.-`___.-'=====
-//                                                 `=---='
-//
-//                                 佛祖保佑         永无BUG
-	
+	//                                            _oo0oo_
+	//                                           o8888888o
+	//                                             88" . "88
+	//                                             (| ^_^ |)                              
+	//                                             O\  =  /O                              
+	//                                        ____/`---'\____  
+	//                                          .' \\|     |// '.
+	//                                       / \\|||  :  |||// \
+	//                                    / _||||| -:- |||||- \
+	//                                      |   | \\\  -  /// |   |
+	//                                     | \_|  ''\---/''  |_/ |
+	//                                      \  .-\__  '-'  ___/-. /
+	//                                   ___'. .'  /--.--\  `. .'___
+	//                           ."" '<  `.___\_<|>_/___.' >' "".
+	//                               | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+	//                             \  \ `_.   \_ __\ /__ _/   .-` /  /
+	//               =====`-.____`.___ \_____/___.-`___.-'=====
+	//                                                 `=---='
+	//
+	//                                 佛祖保佑         永无BUG
 
 	@Autowired
 	CmsEmployeeService service;
 
 	@Autowired
 	ServiceUtils serviceUtils;
-	
+
 	@Autowired
 	CommonMapper commonMapper;
 
@@ -71,19 +70,19 @@ public class CmsEmployeeListController extends ControllerBase {
 	public String init(Model model, HttpServletRequest request) {
 
 		try {
-			
+
 			CmsEmployeeListForm form = new CmsEmployeeListForm();
-			
+
 			//session情報の設定
 			this.setScreenHidden(request, form);
-			
+
 			super.setCommonItem(form, true);
 			model.addAttribute("form", form);
-			
+
 		} catch (SystemException se) {
 			System.out.println(se.getMessage());
 		}
-		
+
 		return UrlConst.cmsemployeelist;
 	}
 
@@ -95,11 +94,11 @@ public class CmsEmployeeListController extends ControllerBase {
 		try {
 			//session情報の設定
 			this.setScreenHidden(request, form);
-			
-		    // 画面データ初期化
+
+			// 画面データ初期化
 			searchScreenList(form, model);
 		} catch (BusinessException be) {
-			
+
 			//業務エラーを画面に表示する
 			form.setErrorMessage(be.getMessage());
 			model.addAttribute("form", form);
@@ -118,15 +117,16 @@ public class CmsEmployeeListController extends ControllerBase {
 		try {
 			//項目初期化
 			super.setCommonItem(form, false);
-			
+
 			// 検索実施
 			CmsEmployeeListForm responseForm = service.select(form);
 			model.addAttribute("form", responseForm);
-			
+
 		} catch (SystemException se) {
 			System.out.println(se.getMessage());
 		}
 	}
+
 	/**
 	 * 新規ボタン
 	 */
@@ -140,7 +140,7 @@ public class CmsEmployeeListController extends ControllerBase {
 	 * 参照ボタン
 	 */
 	@RequestMapping(params = "read", method = RequestMethod.POST)
-	public String read(@ModelAttribute("form") CmsEmployeeListForm form, 
+	public String read(@ModelAttribute("form") CmsEmployeeListForm form,
 			Model model, RedirectAttributes redirectAttributes, @RequestParam String read) {
 
 		String[] param = read.split("_");
@@ -151,17 +151,16 @@ public class CmsEmployeeListController extends ControllerBase {
 			//参照ボタンの場合、trueを設定する
 			form.setBtnFlg(false);
 			service.optimismCheck(form);
-			
+
 		} catch (BusinessException be) {
-			
+
 			form.setErrorMessage(be.getMessage());
 			// 画面データ初期化
 			searchScreenList(form, model);
-			
+
 			return UrlConst.cmsemployeelist;
 		}
 
-		
 		// 更新画面へ渡す引数：社員ＩＤ
 		redirectAttributes.addAttribute("selectedEmployeeId", param[0]);
 		return UrlConst.redirect_cmsemployeeview;
@@ -172,9 +171,9 @@ public class CmsEmployeeListController extends ControllerBase {
 	 * 更新ボタン
 	 */
 	@RequestMapping(params = "update", method = RequestMethod.POST)
-	public String update(@ModelAttribute("form") CmsEmployeeListForm form, 
+	public String update(@ModelAttribute("form") CmsEmployeeListForm form,
 			Model model, RedirectAttributes redirectAttributes, @RequestParam String update) {
-        
+
 		String[] param = update.split("_");
 		try {
 
@@ -183,9 +182,9 @@ public class CmsEmployeeListController extends ControllerBase {
 			//参照ボタンの場合、trueを設定する
 			form.setBtnFlg(true);
 			service.optimismCheck(form);
-			
+
 		} catch (BusinessException be) {
-			
+
 			form.setErrorMessage(be.getMessage());
 			// 画面データ初期化
 			searchScreenList(form, model);
@@ -202,11 +201,11 @@ public class CmsEmployeeListController extends ControllerBase {
 	 * 削除ボタン
 	 */
 	@RequestMapping(params = "delete", method = RequestMethod.POST)
-	public String delete(@ModelAttribute("form") CmsEmployeeListForm form, 
+	public String delete(@ModelAttribute("form") CmsEmployeeListForm form,
 			Model model, @RequestParam String delete) {
 
 		try {
-			
+
 			//削除対象をサービスに渡す
 			form.setSelectedItemId(delete);
 			//削除を行う
@@ -215,7 +214,7 @@ public class CmsEmployeeListController extends ControllerBase {
 			// 画面データ初期化
 			searchScreenList(responseForm, model);
 		} catch (BusinessException be) {
-			
+
 			form.setErrorMessage(be.getMessage());
 			//削除が失敗したら、再検索をしなく、そのままエラー情報を画面に設定する
 			// 画面データ初期化
@@ -225,7 +224,7 @@ public class CmsEmployeeListController extends ControllerBase {
 		return UrlConst.cmsemployeelist;
 
 	}
-	
+
 	/**
 	 * 全削除
 	 */
@@ -237,10 +236,11 @@ public class CmsEmployeeListController extends ControllerBase {
 
 		// 画面データ初期化
 		searchScreenList(form, model);
-		
+
 		return UrlConst.cmsemployeelist;
 
 	}
+
 	/**
 	 * 請求書作成を行う
 	 */
@@ -249,17 +249,17 @@ public class CmsEmployeeListController extends ControllerBase {
 		try {
 			// 社員区分（ラジオボタン）
 			super.setCommonItem(form, true);
-			
+
 			// PDF出力
 			PdfUtil.printPdf("C:/work/pdf/template/PdfTemple.pdf");
 			model.addAttribute("dataList", lst);
 			form.setErrorMessage("PDFファイルが作成されました。");
 			model.addAttribute("form", form);
-			
+
 		} catch (SystemException se) {
 			System.out.println(se.getMessage());
 		}
-		
+
 		return UrlConst.cmsemployeelist;
 	}
 
@@ -272,8 +272,8 @@ public class CmsEmployeeListController extends ControllerBase {
 		//職種を設定する
 		String jobType = String.valueOf(session.getAttribute("jobType"));
 		form.setSessionJobType(jobType);
-		
+
 		//社員の場合、新規ボタンを禁止する
-		form.setDisabledFlg(("J5".equals(jobType)) ? "display:none;":"");
+		form.setDisabledFlg(("J5".equals(jobType)) ? "display:none;" : "");
 	}
 }
