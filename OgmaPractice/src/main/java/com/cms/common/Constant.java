@@ -2,6 +2,6 @@ package com.cms.common;
 
 public class Constant {
 
-	//GitHubテスト
+	//GitHubテスト（２回目）
 	public final static String FORMAT_EMPLOYEEID = "%08d";
 }
