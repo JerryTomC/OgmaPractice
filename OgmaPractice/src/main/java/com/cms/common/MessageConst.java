@@ -19,5 +19,7 @@ public class MessageConst {
 
 	/* 一覧検索結果が存在しない */
 	public final static String HAVE_NOT_SEARCH_RESULT = "検索結果はありません。";
+	/* 一覧検索結果が存在しない */
+	public final static String HAVE_NOT_SEARCH_RESULTTest = "テストエッセー時";
 	
 }
