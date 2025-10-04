@@ -37,7 +37,9 @@ public class CmsEmployeeEditController extends ControllerBase {
 
 		CmsEmployeeForm form = new CmsEmployeeForm();
 		form.setEmployeeId(selectedEmployeeId);
-System.out.println("test");
+　　　　//ソースマージバグ修正
+		System.out.println("test");
+		
 //共通項目設定
 		super.setCommonItem(form, true);
 		
